@@ -1,0 +1,14 @@
+<resources>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="page_list">page_list</string>
+    <string name="page_detail">page_detail</string>
+
+    <string name="id">ID</string>
+    <string name="title">Title</string>
+    <string name="sub_Title">Sub Title</string>
+    <string name="body">Body</string>
+    <string name="date">Date</string>
+    <string name="retry">Retry</string>
+    <string name="refresh">Refresh</string>
+</resources>

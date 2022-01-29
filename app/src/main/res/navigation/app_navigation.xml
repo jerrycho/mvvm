@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/contentListFragment">
+
+    <fragment
+        android:id="@+id/contentListFragment"
+        android:name="com.jerry.mvvm.ui.content.ContentListFragment"
+        android:label="fragment_list"
+        tools:layout="@layout/frag_content_list" >
+
+
+        <action
+            android:id="@+id/action_contentListFragment_to_contentDetailFragment"
+            app:destination="@id/contentDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/contentDetailFragment"
+        android:name="com.jerry.mvvm.ui.content.ContentDetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/frag_content_detail" />
+
+</navigation>
