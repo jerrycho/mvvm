@@ -16,7 +16,7 @@ android {
 
         testInstrumentationRunner "com.jerry.mvvm.app.MvvmInstrumentationRunner"
         multiDexEnabled true
-        buildConfigField "String", "BASE_URL", "\"https://dynamic.pulselive.com\""
+        buildConfigField "String", "BASE_URL", "\"https://raw.githubusercontent.com\""
     }
 
     buildTypes {
@@ -47,12 +47,12 @@ android {
         dev {
             applicationIdSuffix ".dev"
             resValue "string", "app_name", "mvvm DEV"
-            buildConfigField "String", "BASE_URL", "\"https://dynamic.pulselive.com\""
+            buildConfigField "String", "BASE_URL", "\"https://raw.githubusercontent.com\""
         }
         prod {
             resValue "string", "app_name", "mvvm"
             //Product Server URL
-            buildConfigField "String", "BASE_URL", "\"https://dynamic.pulselive.com\""
+            buildConfigField "String", "BASE_URL", "\"https://raw.githubusercontent.com\""
         }
     }
 }

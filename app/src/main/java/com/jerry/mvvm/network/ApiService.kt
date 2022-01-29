@@ -8,10 +8,10 @@ import retrofit2.http.Path
 
 interface ApiService {
 
-    @GET("/test/native/contentList.json")
+    @GET("/jerrycho/mvvm/main/json/content_list.json")
     suspend fun getContentList(): ContentListResponse
 
-    @GET("/test/native/content/{contentId}.json")
+    @GET("/jerrycho/mvvm/main/json/detail_{contentId}.json")
     suspend fun getContentById(@Path("contentId") contentId: Int): ContentDetailResponse
 
 }
