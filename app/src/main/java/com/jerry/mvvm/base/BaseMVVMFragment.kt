@@ -8,22 +8,21 @@ import androidx.annotation.CallSuper
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
-abstract class BaseMVVMFragment<VM : BaseViewModel, BINDING : ViewDataBinding> : BaseFragment() {
+abstract class BaseMVVMFragment<BINDING : ViewDataBinding> : BaseFragment() {
 
-    protected lateinit var viewModel: VM
+
     protected lateinit var binding: BINDING
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = getViewModelInstance()
 
-        viewModel.isShowLoading.observe(this) {
+        getViewModelInstance().isShowLoading.observe(this) {
             showLoadingIndicator(it == true)
         }
 
-        viewModel.error.observe(this) {
+        getViewModelInstance().error.observe(this) {
             it?.let{
                 showErrorOKDialog(it)
             }
@@ -44,6 +43,6 @@ abstract class BaseMVVMFragment<VM : BaseViewModel, BINDING : ViewDataBinding> :
         return binding.root
     }
 
-    abstract fun getViewModelInstance(): VM
+    abstract fun getViewModelInstance(): BaseViewModel
 
 }

@@ -5,11 +5,10 @@ import androidx.lifecycle.ViewModel
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 
 open class BaseViewModel(
-    mainDispatcher: CoroutineDispatcher,
-    ioDispatcher: CoroutineDispatcher,
 )  : ViewModel() {
 
     protected val job = SupervisorJob()
@@ -17,9 +16,8 @@ open class BaseViewModel(
     open val isShowLoading: MutableLiveData<Boolean> = MutableLiveData()
     open val error: MutableLiveData<String> = MutableLiveData()
 
-
-    protected val mUiScope = CoroutineScope(mainDispatcher + job)
-    protected val mIoScope = CoroutineScope(ioDispatcher + job)
+    protected val mUiScope = CoroutineScope(Dispatchers.Main + job) //Dispatchers.Main main thread , UI thread
+    protected val mIoScope = CoroutineScope(Dispatchers.IO + job)// using for a job / something using long time like http call
 
 //    val apiError = MutableLiveData<ErrorResponse>()
 

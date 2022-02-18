@@ -2,6 +2,7 @@ package com.jerry.mvvm.ui.content
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 
 import com.jerry.mvvm.R
@@ -10,14 +11,16 @@ import com.jerry.mvvm.databinding.FragContentDetailBinding
 import com.jerry.mvvm.model.ContentDetail
 import com.jerry.mvvm.ui.content.usecase.ContentUseCase
 import com.jerry.mvvm.ui.content.viewmodel.ContentDetailViewModel
+import com.jerry.mvvm.ui.content.viewmodel.ContentListingViewModel
 
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.android.inject
 
 private const val KEY_SELECTED_ID = "KEY_SELECTED_ID"
 
-class ContentDetailFragment : BaseMVVMFragment<ContentDetailViewModel, FragContentDetailBinding>() {
+class ContentDetailFragment : BaseMVVMFragment<FragContentDetailBinding>() {
 
+    val viewModel: ContentDetailViewModel by viewModels()
     val mContentUseCase : ContentUseCase by inject()
 
     private var id: Int? = null
@@ -30,7 +33,8 @@ class ContentDetailFragment : BaseMVVMFragment<ContentDetailViewModel, FragConte
 
 
     override fun getViewModelInstance(): ContentDetailViewModel {
-        return ContentDetailViewModel(Dispatchers.Main, Dispatchers.IO, mContentUseCase)
+        //return ContentDetailViewModel(Dispatchers.Main, Dispatchers.IO, mContentUseCase)
+        return viewModel
     }
 
 

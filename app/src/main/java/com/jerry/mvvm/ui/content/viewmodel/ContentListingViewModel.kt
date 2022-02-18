@@ -11,15 +11,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class ContentListingViewModel (
-    mainDispatcher: CoroutineDispatcher,
-    ioDispatcher: CoroutineDispatcher,
-    private val useCase: ContentUseCase
-)
-    : BaseViewModel(mainDispatcher, ioDispatcher,), KoinComponent {
+class ContentListingViewModel (): BaseViewModel(), KoinComponent {
 
     var contentListMutableLiveData = MutableLiveData<ResponseContainer<ContentListResponse>>()
+    val mContentUseCase : ContentUseCase by inject()
 
     init {
         getContentList()
@@ -31,7 +28,7 @@ class ContentListingViewModel (
             showLoadingIndicator(true)
             try {
                 val data = mIoScope.async {
-                    return@async useCase.getContentList()
+                    return@async mContentUseCase.getContentList()
                 }.await()
                 try {
                     contentListMutableLiveData.value = ResponseContainer.success(data)

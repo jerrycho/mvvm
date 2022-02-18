@@ -12,15 +12,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class ContentDetailViewModel (
-    mainDispatcher: CoroutineDispatcher,
-    ioDispatcher: CoroutineDispatcher,
-    private val useCase: ContentUseCase
-)
-    : BaseViewModel(mainDispatcher, ioDispatcher,), KoinComponent {
+class ContentDetailViewModel ()
+    : BaseViewModel(), KoinComponent {
 
     open var contentDetailMutableLiveData = MutableLiveData<ResponseContainer<ContentDetailResponse>>()
+    val mContentUseCase : ContentUseCase by inject()
 
     fun getContentById(id: Int?){
         mUiScope.launch {
@@ -28,7 +26,7 @@ class ContentDetailViewModel (
             showLoadingIndicator(true)
             try {
                 val data = mIoScope.async {
-                    return@async useCase.getContentById(id!!)
+                    return@async mContentUseCase.getContentById(id!!)
                 }.await()
                 try {
                     contentDetailMutableLiveData.value = ResponseContainer.success(data)

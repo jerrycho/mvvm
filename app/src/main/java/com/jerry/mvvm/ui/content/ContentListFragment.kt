@@ -3,6 +3,7 @@ package com.jerry.mvvm.ui.content
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.jerry.mvvm.model.Content
@@ -17,9 +18,9 @@ import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.android.inject
 
 //<ContentListingViewModel, FragContentListBinding>
-class ContentListFragment : BaseMVVMFragment<ContentListingViewModel, FragContentListBinding>() {
+class ContentListFragment : BaseMVVMFragment<FragContentListBinding>() {
 
-    val mContentUseCase : ContentUseCase by inject()
+    val viewModel: ContentListingViewModel by viewModels()
 
     private var contentAdapter: ContentAdapter? = null
 
@@ -67,7 +68,8 @@ class ContentListFragment : BaseMVVMFragment<ContentListingViewModel, FragConten
     }
 
     override fun getViewModelInstance(): ContentListingViewModel {
-        return ContentListingViewModel(Dispatchers.Main, Dispatchers.IO, mContentUseCase)
+        return viewModel
+        //return ContentListingViewModel(Dispatchers.Main, Dispatchers.IO, mContentUseCase)
     }
 
     override fun onRetryButtonClicked() {
