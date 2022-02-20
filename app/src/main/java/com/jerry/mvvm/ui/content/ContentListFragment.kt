@@ -2,38 +2,39 @@ package com.jerry.mvvm.ui.content
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.jerry.mvvm.model.Content
+import com.cookpad.hiring.android.ui.listener.OnItemListener
+import com.jerry.mvvm.model.remote.Content
 import com.jerry.mvvm.ui.content.adapter.ContentAdapter
-import com.jerry.mvvm.ui.content.usecase.ContentUseCase
 import com.jerry.mvvm.ui.content.viewmodel.ContentListingViewModel
 import com.jerry.mvvm.R
 import com.jerry.mvvm.base.BaseMVVMFragment
 import com.jerry.mvvm.databinding.FragContentListBinding
-
-import kotlinx.coroutines.Dispatchers
-import org.koin.android.ext.android.inject
 
 //<ContentListingViewModel, FragContentListBinding>
 class ContentListFragment : BaseMVVMFragment<FragContentListBinding>() {
 
     val viewModel: ContentListingViewModel by viewModels()
 
-    private var contentAdapter: ContentAdapter? = null
+    lateinit var contentAdapter: ContentAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        contentAdapter = ContentAdapter(object : ContentAdapter.OnItemClickListener {
-            override fun onItemClicked(item: Content) {
-                doNavToDetail(item)
-            }
-        })
-
         binding.rvContent.apply {
+            contentAdapter = ContentAdapter()
+            contentAdapter.setListener(object : OnItemListener {
+                override fun onItemClicked(item: Content) {
+                    doNavToDetail(item)
+                }
+
+                override fun  onHeartClicked(item : Content){
+                    viewModel.addOrRemoveCollections(item)
+                }
+            })
+
             adapter = contentAdapter
             itemAnimator = null
             addItemDecoration(

@@ -1,4 +1,4 @@
-package com.jerry.mvvm.model
+package com.jerry.mvvm.model.remote
 
 
 class ResponseContainer<T>(

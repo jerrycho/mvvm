@@ -3,12 +3,15 @@ package com.jerry.mvvm.ui.content.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.jerry.mvvm.model.Content
+import com.bumptech.glide.Glide
+import com.cookpad.hiring.android.ui.listener.OnItemListener
+import com.jerry.mvvm.R
+import com.jerry.mvvm.model.remote.Content
 import com.jerry.mvvm.databinding.ViewholderContentBinding
 
 
 
-class ContentAdapter(val onItemClickListener:OnItemClickListener)
+class ContentAdapter()
     : RecyclerView.Adapter<ContentAdapter.ContentViewHolder>() {
 
     var contents = mutableListOf<Content>()
@@ -17,6 +20,12 @@ class ContentAdapter(val onItemClickListener:OnItemClickListener)
 
     interface OnItemClickListener{
         fun onItemClicked(item : Content)
+    }
+
+    private lateinit var listener: OnItemListener
+
+    open fun setListener(listener: OnItemListener) {
+        this.listener = listener
     }
 
     fun setContentList(contents: List<Content>?) {
@@ -33,11 +42,11 @@ class ContentAdapter(val onItemClickListener:OnItemClickListener)
 
     override fun onBindViewHolder(holder: ContentViewHolder, position: Int) {
         holder.bind(
-            contents[position]
+            contents[position], listener
         )
 
         holder.itemView.setOnClickListener {
-            onItemClickListener.onItemClicked(contents[position])
+            listener.onItemClicked(contents[position])
         }
     }
 
@@ -51,13 +60,29 @@ class ContentAdapter(val onItemClickListener:OnItemClickListener)
 
         private var content: Content? = null
 
-        fun bind(content: Content?) {
+        fun bind(content: Content?, listener: OnItemListener) {
             this.content = content
 
             content?.let {
                 binding.tvTitle.text = content.title
                 binding.tvSubTitle.text =content.subtitle
                 binding.tvDate.text = content.date
+
+
+                Glide.with(binding.root.context)
+                    .load(content.previewImageUrls?.firstOrNull())
+                    .centerCrop()
+                    .into(binding.imageView)
+
+                binding.favouriteImageView.setImageResource(
+                    if (content.liked) R.drawable.ic_baseline_favorite_24 else R.drawable.ic_baseline_favorite_border_24
+                )
+
+                binding.favouriteImageView.setOnClickListener {
+                    listener.onHeartClicked(content)
+                    content.liked = !content.liked
+                    bind(content, listener)
+                }
             }
         }
     }

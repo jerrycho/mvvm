@@ -8,12 +8,10 @@ import androidx.lifecycle.observe
 import com.jerry.mvvm.R
 import com.jerry.mvvm.base.BaseMVVMFragment
 import com.jerry.mvvm.databinding.FragContentDetailBinding
-import com.jerry.mvvm.model.ContentDetail
+import com.jerry.mvvm.model.remote.ContentDetail
 import com.jerry.mvvm.ui.content.usecase.ContentUseCase
 import com.jerry.mvvm.ui.content.viewmodel.ContentDetailViewModel
-import com.jerry.mvvm.ui.content.viewmodel.ContentListingViewModel
 
-import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.android.inject
 
 private const val KEY_SELECTED_ID = "KEY_SELECTED_ID"
@@ -23,11 +21,11 @@ class ContentDetailFragment : BaseMVVMFragment<FragContentDetailBinding>() {
     val viewModel: ContentDetailViewModel by viewModels()
     val mContentUseCase : ContentUseCase by inject()
 
-    private var id: Int? = null
+    private var id: Long? = null
 
     companion object {
-        fun createBundle(id: Int) = Bundle().apply {
-            putInt(KEY_SELECTED_ID, id)
+        fun createBundle(id: Long) = Bundle().apply {
+            putLong(KEY_SELECTED_ID, id)
         }
     }
 
@@ -45,7 +43,7 @@ class ContentDetailFragment : BaseMVVMFragment<FragContentDetailBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            id = it.getInt(KEY_SELECTED_ID)
+            id = it.getLong(KEY_SELECTED_ID)
 
         }
     }

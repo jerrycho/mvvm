@@ -1,6 +1,7 @@
 package com.jerry.mvvm
 
 import androidx.multidex.MultiDexApplication
+import com.jerry.mvvm.di.databaseModule
 import com.jerry.mvvm.di.networkModule
 import com.jerry.mvvm.di.useCaseModule
 import org.koin.android.ext.koin.androidContext
@@ -20,6 +21,7 @@ open class MvvmApplication : MultiDexApplication(){
 
     open fun getModules() = listOf(
         networkModule,
-        useCaseModule
+        useCaseModule,
+        databaseModule
     )
 }

@@ -4,13 +4,10 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.gson.Gson
 import com.jerry.plusassignment.base.BaseTest
 import com.jerry.mvvm.di.mainAppUnitTestModule
-import com.jerry.mvvm.model.ContentDetail
-import com.jerry.mvvm.model.ContentDetailResponse
-import com.jerry.mvvm.model.ContentListResponse
-import com.jerry.mvvm.model.ResponseContainer
+import com.jerry.mvvm.model.remote.ContentDetailResponse
+import com.jerry.mvvm.model.remote.ResponseContainer
 import com.jerry.mvvm.ui.content.usecase.ContentUseCase
 import com.jerry.mvvm.ui.content.viewmodel.ContentDetailViewModel
-import com.jerry.mvvm.ui.content.viewmodel.ContentListingViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
