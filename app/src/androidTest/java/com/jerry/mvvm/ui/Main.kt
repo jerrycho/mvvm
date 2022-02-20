@@ -31,7 +31,6 @@ import org.koin.core.context.loadKoinModules
 import java.net.HttpURLConnection
 import java.util.regex.Pattern.matches
 
-
 @RunWith(AndroidJUnit4::class)
 class Main: BaseUITest(){
     @Rule
@@ -97,15 +96,38 @@ class Main: BaseUITest(){
 
         mockNetworkResponse("detail_36", HttpURLConnection.HTTP_OK)
 
-        clickOnButtonAtRow(0)
+        /*
+        Espresso.onView(withId(R.id.rvContent))
+            .check(
+                ViewAssertions.matches(
+                    recyclerItemAtPosition(
+                        7,
+                        ViewMatchers.hasDescendant(ViewMatchers.withText("Article 1"))
+                    )
+                )
+            )
+         */
+
+        //click heart
+        clickHeartOnItem (0)
+
+        SystemClock.sleep(1000)
+
+        //click item level
+        clickOnButtonAtRow(1)
 
         SystemClock.sleep(1000)
 
     }
 
     private fun clickOnButtonAtRow(position: Int) {
-        Espresso.onView(ViewMatchers.withId(R.id.rvContent)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>
+        Espresso.onView(ViewMatchers.withId(com.jerry.mvvm.R.id.rvContent)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>
             (position, ClickOnButtonView()))
+    }
+
+    private fun clickHeartOnItem(position: Int) {
+        Espresso.onView(ViewMatchers.withId(com.jerry.mvvm.R.id.rvContent)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>
+            (position, ClickOnHeartView()))
     }
 
     inner class ClickOnButtonView : ViewAction {
@@ -122,6 +144,23 @@ class Main: BaseUITest(){
         override fun perform(uiController: UiController, view: View) {
             //btnClickMe -> Custom row item view button
             click.perform(uiController, view.findViewById(R.id.detailLayout))
+        }
+    }
+
+    inner class ClickOnHeartView : ViewAction {
+        internal var click = ViewActions.click()
+
+        override fun getConstraints(): Matcher<View> {
+            return click.constraints
+        }
+
+        override fun getDescription(): String {
+            return " click on custom button view"
+        }
+
+        override fun perform(uiController: UiController, view: View) {
+            val button: View = view.findViewById(com.jerry.mvvm.R.id.favouriteImageView)
+            button.performClick()
         }
     }
 }

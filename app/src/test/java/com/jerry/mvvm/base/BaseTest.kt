@@ -1,20 +1,27 @@
-package com.jerry.plusassignment.base
+package com.jerry.mvvm.base
 
 import android.content.res.Resources
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.jerry.mvvm.room.MvvmDatabase
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
+import org.koin.test.inject
 import java.io.File
 
 
 abstract class BaseTest : KoinTest {
 
+    @Rule
+    @JvmField
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var mMockServerInstance: MockWebServer
-
+    val mvvmDatabase by inject<MvvmDatabase>()
 
     private var mShouldStart = false
 
@@ -61,6 +68,9 @@ abstract class BaseTest : KoinTest {
 
     @After
     open fun tearDown(){
+        //close DB
+        mvvmDatabase.close()
+
         //Stop Mock server
         stopMockServer()
         //Stop Koin as well
