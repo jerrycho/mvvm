@@ -7,3 +7,4 @@ ROOM
 Retrofit
 Navigation Library
 Coroutines
+Koin
