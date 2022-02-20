@@ -21,7 +21,8 @@ abstract class BaseTest : KoinTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var mMockServerInstance: MockWebServer
-    val mvvmDatabase by inject<MvvmDatabase>()
+
+    //val mvvmDatabase by inject<MvvmDatabase>()
 
     private var mShouldStart = false
 
@@ -68,8 +69,6 @@ abstract class BaseTest : KoinTest {
 
     @After
     open fun tearDown(){
-        //close DB
-        mvvmDatabase.close()
 
         //Stop Mock server
         stopMockServer()
